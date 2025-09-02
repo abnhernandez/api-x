@@ -6,6 +6,10 @@ import json
 import datetime
 from dotenv import load_dotenv
 
+# FastAPI para exponer el servicio como web
+from fastapi import FastAPI, BackgroundTasks
+import uvicorn
+
 # Cargar credenciales desde .env
 load_dotenv()
 API_KEY = os.getenv("API_KEY")
@@ -549,5 +553,15 @@ def main():
         print("💾 El progreso se ha guardado automáticamente")
 
 
+app = FastAPI()
+
+@app.post("/publicar")
+def publicar_endpoint(background_tasks: BackgroundTasks):
+    """Endpoint para iniciar la publicación automática de tweets en segundo plano"""
+    background_tasks.add_task(main)
+    return {"status": "ok", "message": "Publicación iniciada en segundo plano"}
+
 if __name__ == "__main__":
-    main()
+    # Ejecutar como API web en el puerto definido por la variable de entorno PORT o 8000 por defecto
+    port = int(os.getenv("PORT", "8000"))
+    uvicorn.run("publicar_tuits:app", host="0.0.0.0", port=port, reload=False)
