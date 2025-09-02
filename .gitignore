@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+venv/
+.env*/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+
+# Windows
+*.exe
+*.bat
+*.ps1
+
+# Logs
+*.log
+
+# Others
+*.sqlite3
+*.db
+
+# Node
+node_modules/
